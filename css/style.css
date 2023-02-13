@@ -106,6 +106,34 @@ input, textarea:focus {
   border-radius: 8px;
 }
 
+.form__user-id {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.form__btn-user {
+  background: none;
+  border: none;
+}
+
+.form__id {
+  margin-left: auto;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 12px;
+  text-transform: uppercase;
+  color: #C5C5C5;
+}
+
+.form__svg {
+  color: #c5c5c5;
+}
+
+.form__total-price {
+
+}
+
 .form__flex {
   display: flex;
   justify-content: space-between;
