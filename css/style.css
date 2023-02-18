@@ -52,7 +52,7 @@ input, textarea:focus {
 }
 
 .container__modal {
-  /*display: none;*/
+  display: none;
   position: absolute;
   left: 50%;
   top: 50%;
