@@ -62,7 +62,6 @@ const table = document.querySelector('table > tbody');
 
 const createRow = (id, title, category, units, count, price, totalPrice) => {
   const row = document.createElement('tr');
-  totalPrice = count * price;
   row.innerHTML = `
     <tr>
         <td>${id}</td>
@@ -108,7 +107,7 @@ const createRow = (id, title, category, units, count, price, totalPrice) => {
 
 const renderGoods = (arr) => {
   arr.forEach(item  => {
-    table.append(createRow(item.id, item.title, item.category, item.units, item.count, item.price, item.totalPrice));
+    table.append(createRow(item.id, item.title, item.category, item.units, item.count, item.price, item.count * item.price));
   } );
 }
 
