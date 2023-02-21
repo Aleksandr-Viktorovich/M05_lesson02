@@ -51,8 +51,28 @@ input, textarea:focus {
   margin: 0 auto;
 }
 
+.form-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: 0.3s ease-in-out;
+  visibility: hidden;
+  width: 100%;
+  z-index: 1;
+}
+
+.form-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
 .container__modal {
-  display: none;
+  /*display: none;*/
   position: absolute;
   left: 50%;
   top: 50%;

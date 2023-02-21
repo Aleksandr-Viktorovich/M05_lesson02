@@ -102,13 +102,32 @@ const createRow = (id, title, category, units, count, price, totalPrice) => {
   return row;
 }
 
-
-
-
 const renderGoods = (arr) => {
   arr.forEach(item  => {
     table.append(createRow(item.id, item.title, item.category, item.units, item.count, item.price, item.count * item.price));
   } );
-}
+};
 
 renderGoods(arrGoods);
+
+const btnModal = document.querySelector('.table__button');
+const modal = document.querySelector('.form');
+const overlay = document.querySelector('.form-overlay');
+
+btnModal.addEventListener('click', () => {
+  overlay.classList.add('is-visible');
+});
+
+overlay.addEventListener('click', () => {
+  overlay.classList.remove('is-visible');
+});
+
+modal.addEventListener('click', event => {
+  event.stopPropagation();
+});
+
+
+
+
+
+
