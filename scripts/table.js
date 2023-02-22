@@ -62,8 +62,9 @@ const table = document.querySelector('table > tbody');
 
 const createRow = (id, title, category, units, count, price, totalPrice) => {
   const row = document.createElement('tr');
+  row.classList.add('table__row');
   row.innerHTML = `
-    <tr>
+    <tr class="table__row">
         <td>${id}</td>
         <td>${title}</td>
         <td>${category}</td>
@@ -113,19 +114,26 @@ renderGoods(arrGoods);
 const btnModal = document.querySelector('.table__button');
 const modal = document.querySelector('.form');
 const overlay = document.querySelector('.form-overlay');
+const btnDel = document.querySelectorAll('.table__btn-img');
 
 btnModal.addEventListener('click', () => {
   overlay.classList.add('is-visible');
 });
 
-overlay.addEventListener('click', () => {
-  overlay.classList.remove('is-visible');
+overlay.addEventListener('click', e => {
+  const target = e.target;
+  if (target === overlay || target.classList.closest('.form__close')) {
+    overlay.classList.remove('is-visible');
+  }
 });
 
-modal.addEventListener('click', event => {
-  event.stopPropagation();
+table.addEventListener('click', e => {
+  const target = e.target;
+  if(target.closest('.table__btn-img')) {
+    target.closest('.table__row').remove();
+    console.log(arrGoods)
+  }
 });
-
 
 
 
