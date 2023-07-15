@@ -60,6 +60,17 @@ const arrGoods = [
 ];
 const table = document.querySelector('table > tbody');
 
+const btnModal = document.querySelector('.table__button');
+const modal = document.querySelector('.form');
+const overlay = document.querySelector('.form-overlay');
+const checked = document.querySelector('.form__check-discount');
+const checkedDiscount = document.querySelector('.form__name-checked');
+let totalModal = document.querySelector('.form__total-price');
+let modalCount = modal.count;
+let modalPrice = modal.price;
+let totalTable = document.querySelector('.table__total');
+
+
 const createRow = (id, title, category, units, count, price, totalPrice) => {
   const row = document.createElement('tr');
   row.classList.add('table__row');
@@ -69,8 +80,8 @@ const createRow = (id, title, category, units, count, price, totalPrice) => {
         <td>${title}</td>
         <td>${category}</td>
         <td>${units}</td>
-        <td>${count}</td>
-        <td>${price}</td>
+        <td class="count">${count}</td>
+        <td class="price">${price}</td>
         <td>${totalPrice}</td>
         <td>
           <ul class="table__icon">
@@ -103,37 +114,105 @@ const createRow = (id, title, category, units, count, price, totalPrice) => {
   return row;
 }
 
-const renderGoods = (arr) => {
-  arr.forEach(item  => {
+
+let goodsCount = document.querySelector('.count');
+let goodsPrice = document.querySelector('.price');
+
+
+const renderGoods = (arrGoods) => {
+  arrGoods.forEach(item  => {
     table.append(createRow(item.id, item.title, item.category, item.units, item.count, item.price, item.count * item.price));
-  } );
+    // totalTable.textContent = item.count * item.price;
+    let sum = arrGoods.reduce((acc,item) => acc + (item.price * item.count), 0)
+    totalTable.textContent = `$ ${+sum}`;
+  });
 };
 
-renderGoods(arrGoods);
 
-const btnModal = document.querySelector('.table__button');
-const modal = document.querySelector('.form');
-const overlay = document.querySelector('.form-overlay');
-const btnDel = document.querySelectorAll('.table__btn-img');
+modal.addEventListener('click', e => {
+  if (checked.checked) {
+   checkedDiscount.disabled = false;
+ } else {
+   checkedDiscount.disabled = true;
+   checkedDiscount.value = '';
+ }
+});
+
 
 btnModal.addEventListener('click', () => {
   overlay.classList.add('is-visible');
 });
 
-overlay.addEventListener('click', e => {
-  const target = e.target;
-  if (target === overlay || target.classList.closest('.form__close')) {
-    overlay.classList.remove('is-visible');
-  }
-});
 
 table.addEventListener('click', e => {
   const target = e.target;
   if(target.closest('.table__btn-img')) {
     target.closest('.table__row').remove();
-    console.log(arrGoods)
   }
 });
+
+
+modalCount.addEventListener('blur', () => {
+  if (modalCount.value !== '' && modalPrice.value !== '') {
+    totalModal.textContent = `$ ${+modalCount.value * +modalPrice.value }`;
+  }
+});
+
+
+modalPrice.addEventListener('blur', () => {
+  if (modalCount.value !== '' && modalPrice.value !== '') {
+    totalModal.textContent = `$ ${+modalCount.value * +modalPrice.value }`;
+  }
+});
+
+
+const closeFormModal =  () => {
+  overlay.addEventListener('click', e => {
+    const target = e.target;
+    if (target === overlay || target.closest('.form__close')) {
+      overlay.classList.remove('is-visible');
+    }
+  });
+};
+
+
+const addGoodsData = (goods) => {
+  arrGoods.push(goods);
+  console.log(arrGoods)
+  let sum = arrGoods.reduce((acc,item) => acc + (item.price * item.count), 0)
+  totalTable.textContent = `$ ${+sum}`;
+};
+
+
+const addGoodsPage = (goods, table) => {
+  goods.id = Math.floor(Math.random() * 1000000000);
+  table.append(createRow(goods.id, goods.title, goods.category, goods.units, goods.count, goods.price, goods.count * goods.price));
+  console.log(table)
+};
+
+
+const formControl = (modal, table) => {
+  modal.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const newGoods = Object.fromEntries(formData);
+
+    addGoodsPage(newGoods, table);
+    addGoodsData(newGoods);
+    modal.reset();
+    overlay.classList.remove('is-visible');
+    totalModal.textContent = '$ 0.00';
+  })
+}
+
+
+closeFormModal();
+formControl(modal, table);
+renderGoods(arrGoods);
+
+
 
 
 
