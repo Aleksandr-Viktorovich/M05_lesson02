@@ -1,9 +1,26 @@
-'use strict';
+import {table, modal} from './elementsDOMmodule.js';
+import {formControl} from "./createGoodsModule.js";
+import {renderGoods} from "./renderGoodsModule.js";
+import {closeFormModal, modalControl} from "./modalControlModule.js";
+import {getStorage} from './storageModule.js'
 
-const title = document.querySelector('.title');
-const userId = document.querySelector('.form__id');
-const userIdBtn = document.querySelector('.form__btn-user');
-const form = document.querySelector('.form');
-const checked = document.querySelector('.form__check-discount');
-const checkedDiscount = document.querySelector('.form__name-checked');
-const totalPrice = document.querySelector('.form__total-price');
+{
+  const init = () => {
+    const data = getStorage('key');
+
+
+
+    closeFormModal();
+    formControl(modal, table);
+    renderGoods(data);
+    modalControl();
+  }
+
+  window.CRM = init;
+}
+
+
+
+
+
+
